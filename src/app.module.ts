@@ -16,7 +16,15 @@ import { AppService } from './app.service';
       password: 'sixpounders1!',
       database: 'fuel-app',
       models: [UserModel],
-      autoLoadModels: true,
+      // autoLoadModels: true,
+      dialectOptions: {
+        ssl: false, // если не используете SSL, можно пропустить
+      },
+      logging: false, // отключить логи, если не нужно
+      define: {
+        timestamps: false,
+        charset: 'utf8', // добавьте это, если нужно
+      },
     }),
     UsersModule,
   ],
