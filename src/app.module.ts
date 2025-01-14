@@ -16,7 +16,7 @@ import { AppService } from './app.service';
       password: 'sixpounders1!',
       database: 'fuel-app',
       models: [UserModel],
-      autoLoadModels: true,
+      // autoLoadModels: true,
     }),
     UsersModule,
   ],

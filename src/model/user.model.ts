@@ -1,13 +1,4 @@
-import {
-  AutoIncrement,
-  Column,
-  CreatedAt,
-  DataType,
-  Model,
-  PrimaryKey,
-  Table,
-  UpdatedAt,
-} from 'sequelize-typescript';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 @Table({ tableName: 'users' })
 export class UserModel extends Model {
@@ -20,16 +11,11 @@ export class UserModel extends Model {
   id: string;
 
   @Column
-  firstName: string;
+  login: string;
 
   @Column
-  age: number;
+  password: string;
 
-  @CreatedAt
   @Column
-  createdAt: Date;
-
-  @UpdatedAt
-  @Column
-  updatedAt: Date;
+  email: string;
 }
