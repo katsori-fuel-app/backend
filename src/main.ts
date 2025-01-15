@@ -1,15 +1,41 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import dotenv from 'dotenv';
+import { ConfigService } from '@nestjs/config';
+import * as dotenv from 'dotenv';
+import * as process from 'node:process';
 
 async function bootstrap() {
-  dotenv.config();
   const app = await NestFactory.create(AppModule);
+  const configService = app.get<ConfigService>(ConfigService);
+
+  dotenv.config();
 
   app.enableCors({
     origin: 'http://localhost:3000',
   });
 
-  await app.listen(process.env.PORT ?? 4000);
+  const port = configService.get<string | number | undefined>('PORT') ?? 4000;
+
+  await app.listen(port);
+
+  if (process?.env?.NODE_ENV) {
+    console.log(
+      `Application using ${process.env['NODE_ENV'].toUpperCase()} env`,
+    );
+    console.log(`Application running on: ${await app.getUrl()}`);
+  }
 }
-bootstrap();
+
+bootstrap()
+  .then(() => {
+    console.log('Status: OK');
+  })
+  .catch((err) => {
+    console.log(
+      `
+
+          ОШИБКАА
+          `,
+      err,
+    );
+  });
