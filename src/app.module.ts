@@ -28,14 +28,3 @@ import { ConfigService } from '@nestjs/config';
   ],
 })
 export class AppModule {}
-
-// dialect: 'postgres',
-// host: 'localhost',
-// port: 5432,
-// username: 'postgres',
-//   password: 'sixpounders1!',
-// password: '123qwe',
-// database: 'fuel-app',
-// models: [UserModel],
-// autoLoadModels: true,
-// }),
