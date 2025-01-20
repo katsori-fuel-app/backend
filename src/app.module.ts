@@ -22,6 +22,8 @@ import { ConfigService } from '@nestjs/config';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         models: [UserModel],
+        synchronize: true,
+        autoLoadModels: true, // авто-создание таблиц
       }),
     }),
     UsersModule,

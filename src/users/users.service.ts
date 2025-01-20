@@ -11,6 +11,15 @@ export class UsersService {
   ) {}
 
   async create(user: User) {
+    console.log(
+      `
+          
+          data123
+          
+          
+          `,
+      user,
+    );
     return await this.userModel.create(user);
   }
 
