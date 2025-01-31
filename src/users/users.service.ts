@@ -5,25 +5,25 @@ import { UserModel } from 'src/model';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectModel(UserModel)
-    private readonly userModel: typeof UserModel,
-  ) {}
+    constructor(
+        @InjectModel(UserModel)
+        private readonly userModel: typeof UserModel,
+    ) {}
 
-  async create(user: User) {
-    console.log(
-      `
+    async create(user: User) {
+        console.log(
+            `
           
           data123
           
           
           `,
-      user,
-    );
-    return await this.userModel.create(user);
-  }
+            user,
+        );
+        return await this.userModel.create(user);
+    }
 
-  async findAll(): Promise<UserModel[]> {
-    return await this.userModel.findAll();
-  }
+    async findAll(): Promise<UserModel[]> {
+        return await this.userModel.findAll();
+    }
 }

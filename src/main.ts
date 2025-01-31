@@ -5,37 +5,37 @@ import * as dotenv from 'dotenv';
 import * as process from 'node:process';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const configService = app.get<ConfigService>(ConfigService);
+    const app = await NestFactory.create(AppModule);
+    const configService = app.get<ConfigService>(ConfigService);
 
-  dotenv.config();
+    dotenv.config();
 
-  app.enableCors({
-    origin: 'http://localhost:3000',
-  });
+    app.enableCors({
+        origin: 'http://localhost:3000',
+    });
 
-  const port = configService.get<string | number | undefined>('PORT') ?? 4000;
+    const port = configService.get<string | number | undefined>('PORT') ?? 4000;
 
-  await app.listen(port);
+    await app.listen(port);
 
-  if (process?.env?.NODE_ENV) {
-    console.log(
-      `Application using ${process.env['NODE_ENV'].toUpperCase()} env`,
-    );
-    console.log(`Application running on: ${await app.getUrl()}`);
-  }
+    if (process?.env?.NODE_ENV) {
+        console.log(
+            `Application using ${process.env['NODE_ENV'].toUpperCase()} env`,
+        );
+        console.log(`Application running on: ${await app.getUrl()}`);
+    }
 }
 
 bootstrap()
-  .then(() => {
-    console.log('Status: OK');
-  })
-  .catch((err) => {
-    console.log(
-      `
+    .then(() => {
+        console.log('Status: OK');
+    })
+    .catch((err) => {
+        console.log(
+            `
 
           ОШИБКАА
           `,
-      err,
-    );
-  });
+            err,
+        );
+    });
