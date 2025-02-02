@@ -8,25 +8,25 @@ import { AppConfigModule } from './config.module';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
-  providers: [AppService],
-  imports: [
-    AppConfigModule,
-    SequelizeModule.forRootAsync({
-      imports: [AppConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        dialect: 'postgres',
-        host: configService.get<string>('DB_HOST'),
-        port: configService.get('DB_PORT'),
-        username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_DATABASE'),
-        models: [UserModel],
-        synchronize: true,
-        autoLoadModels: true, // авто-создание таблиц
-      }),
-    }),
-    UsersModule,
-  ],
+    providers: [AppService],
+    imports: [
+        AppConfigModule,
+        SequelizeModule.forRootAsync({
+            imports: [AppConfigModule],
+            inject: [ConfigService],
+            useFactory: async (configService: ConfigService) => ({
+                dialect: 'postgres',
+                host: configService.get<string>('DB_HOST'),
+                port: configService.get('DB_PORT'),
+                username: configService.get('DB_USERNAME'),
+                password: configService.get('DB_PASSWORD'),
+                database: configService.get('DB_DATABASE'),
+                models: [UserModel],
+                synchronize: true,
+                autoLoadModels: true, // авто-создание таблиц
+            }),
+        }),
+        UsersModule,
+    ],
 })
 export class AppModule {}

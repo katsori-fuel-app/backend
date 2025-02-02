@@ -5,15 +5,15 @@ import { UserDto } from './dto';
 @Global()
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: UserDto) {
-    return this.usersService.create(createUserDto);
-  }
+    @Post()
+    create(@Body() createUserDto: UserDto) {
+        return this.usersService.create(createUserDto);
+    }
 
-  @Get()
-  getAll() {
-    return this.usersService.findAll();
-  }
+    @Get()
+    getAll() {
+        return this.usersService.findAll();
+    }
 }
