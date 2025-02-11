@@ -11,19 +11,14 @@ export class UsersService {
     ) {}
 
     async create(user: User) {
-        console.log(
-            `
-          
-          data123
-          
-          
-          `,
-            user,
-        );
         return await this.userModel.create(user);
     }
 
     async findAll(): Promise<UserModel[]> {
         return await this.userModel.findAll();
+    }
+
+    async findOne(login: string): Promise<UserModel | null> {
+        return await this.userModel.findOne({ where: { login } });
     }
 }
