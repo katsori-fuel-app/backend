@@ -19,6 +19,13 @@ export class UsersService {
     }
 
     async findOne(login: string): Promise<UserModel | null> {
-        return await this.userModel.findOne({ where: { login } });
+        const user = await this.userModel.findOne({ where: { login } });
+        console.log(
+            `
+            
+            info: `,
+            user,
+        );
+        return user;
     }
 }
