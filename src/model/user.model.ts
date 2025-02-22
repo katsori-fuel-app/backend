@@ -1,4 +1,5 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import { MessageModel } from './message.model';
 
 @Table({ tableName: 'users' })
 export class UserModel extends Model {
@@ -18,4 +19,7 @@ export class UserModel extends Model {
 
     @Column
     email: string;
+
+    @HasMany(() => MessageModel)
+    messageList: string[];
 }

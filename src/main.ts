@@ -20,9 +20,9 @@ async function bootstrap() {
 
     if (process?.env?.NODE_ENV) {
         console.log(
-            `Application using ${process.env['NODE_ENV'].toUpperCase()} env`,
+            `Используется ${process.env['NODE_ENV'].toUpperCase()} mode`,
         );
-        console.log(`Application running on: ${await app.getUrl()}`);
+        console.log(`Сервер запущен на: ${await app.getUrl()}`);
     }
 }
 
