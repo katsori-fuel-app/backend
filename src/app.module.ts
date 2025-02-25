@@ -21,7 +21,7 @@ import { MessageModule } from './message/message.module';
                 port: configService.get('DB_PORT'),
                 username: configService.get('DB_USERNAME'),
                 password: configService.get('DB_PASSWORD'),
-                database: configService.get('DB_DATABASE'),
+                database: configService.get('DB_NAME'),
                 models: [UserModel, MessageModel],
                 synchronize: true,
                 autoLoadModels: true, // авто-создание таблиц
