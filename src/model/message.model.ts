@@ -17,10 +17,7 @@ export class MessageModel extends Model {
         autoIncrement: true,
         primaryKey: true,
     })
-    id: string;
-
-    @Column
-    message: string;
+    id: number;
 
     @ForeignKey(() => UserModel)
     @Column
@@ -28,4 +25,7 @@ export class MessageModel extends Model {
 
     @BelongsTo(() => UserModel)
     user: User;
+
+    @Column
+    message: string;
 }
