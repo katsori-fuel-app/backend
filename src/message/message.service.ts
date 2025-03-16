@@ -14,7 +14,11 @@ export class MessageService {
         return await this.messageModel.create(message);
     }
 
-    async getAll(): Promise<MessageDTO[]> {
-        return await this.messageModel.findAll();
+    async getAll(userId: number): Promise<MessageDTO[]> {
+        const messages = await this.messageModel.findAll({
+            where: { userId },
+        });
+
+        return messages;
     }
 }

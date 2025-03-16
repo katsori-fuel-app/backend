@@ -9,7 +9,7 @@ export class UserModel extends Model {
         autoIncrement: true,
         primaryKey: true,
     })
-    id: string;
+    id: number;
 
     @Column
     login: string;
@@ -21,5 +21,5 @@ export class UserModel extends Model {
     email: string;
 
     @HasMany(() => MessageModel)
-    messageList: string[];
+    messageList: MessageModel[];
 }
