@@ -19,9 +19,7 @@ async function bootstrap() {
     await app.listen(port);
 
     if (process?.env?.NODE_ENV) {
-        console.log(
-            `Используется ${process.env['NODE_ENV'].toUpperCase()} mode`,
-        );
+        console.log(`Используется ${process.env['NODE_ENV'].toUpperCase()} mode`);
         console.log(`Сервер запущен на: ${await app.getUrl()}`);
     }
 }
