@@ -1,4 +1,8 @@
 export type FuelStatsDTO = {
-    first: any;
-    second: any;
+    date: Date;
+    fuelCount: number;
+    fuelType: string;
+    refuelCost: number;
+    comment: string;
+    totalMileage: number;
 };
