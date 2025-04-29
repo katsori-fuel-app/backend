@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Controller, Get, Global, Post, Query } from '@nestjs/common';
 import { FuelStatsService } from './fuelStats.service';
-import { FuelStatsDTO } from './model';
+import { FuelStatsDto } from './dto';
 
 type CalcOnServer = {
     consumedMileage: number; // высчитывается на серваке, убрать из DTO.
@@ -14,11 +14,12 @@ export class FuelStatsController {
     constructor(private readonly fuelStatsService: FuelStatsService) {}
 
     @Post()
-    async create(@Body() newRecording: FuelStatsDTO) {
-        const { comment, date, fuelCount, fuelType, refuelCost, totalMileage } = newRecording;
-        if (!fuelCount || !fuelType || !refuelCost || !totalMileage) {
+    async create(@Body() newRecording: FuelStatsDto) {
+        const { comment, date, fuelCount, fuelType, refuelCost, totalMileage, userId } =
+            newRecording;
+        if (!fuelCount || !fuelType || !refuelCost || !totalMileage || !userId) {
             throw new BadRequestException(
-                'Следующие поля должны быть обязательными: fuelCount, fuelType, refuelCost, totalMileag.',
+                'Следующие поля должны быть обязательными: fuelCount, fuelType, refuelCost, totalMileage, userId.',
             );
         }
 
@@ -43,9 +44,10 @@ export class FuelStatsController {
 
     @Get('/recordings')
     async getRecordingsByUser(@Query('userId') userId: number) {
-        // if (!userId) {
-        //     throw new BadRequestException('userId обязателен.');
-        // }
-        // return this.messageService.getAll(userId);
+        if (!userId) {
+            throw new BadRequestException('userId обязателен.');
+        }
+
+        return this.fuelStatsService.getAll(userId);
     }
 }

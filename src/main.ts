@@ -12,8 +12,9 @@ async function bootstrap() {
 
     app.enableCors({
         // origin: 'http://localhost:3000',
-        origin: '*',
+        origin: 'https://hoppscotch.io',
     });
+
     const port = configService.get<string | number | undefined>('PORT') ?? 4000;
 
     await app.listen(port);
