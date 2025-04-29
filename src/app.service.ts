@@ -7,16 +7,10 @@ export class AppService {
 
     async onModuleInit() {
         try {
-            await this.sequelize.authenticate(); // Проверяем подключение
-            console.log('Database connection established successfully.');
+            await this.sequelize.authenticate();
+            console.log('Подключение к БД established successfully.');
         } catch (error) {
-            console.error(
-                `
-        
-        Failed to connect to the database:`,
-                error,
-            );
-            throw new Error('Database connection error');
+            throw new Error('Ошибка: Database connection error');
         }
     }
 }

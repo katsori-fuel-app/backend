@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 
 import { SequelizeModule } from '@nestjs/sequelize';
 import { UsersModule } from './users/users.module';
-import { MessageModel, UserModel } from './model';
+import { FuelStatsModel, MessageModel, UserModel } from './model';
 import { AppService } from './app.service';
 import { AppConfigModule } from './config.module';
 import { ConfigService } from '@nestjs/config';
 import { MessageModule } from './message/message.module';
+import { FuelStatsModule } from './fuelStats/fuelStats.module';
 
 @Module({
     providers: [AppService],
@@ -22,13 +23,14 @@ import { MessageModule } from './message/message.module';
                 username: configService.get('DB_USERNAME'),
                 password: configService.get('DB_PASSWORD'),
                 database: configService.get('DB_NAME'),
-                models: [UserModel, MessageModel],
+                models: [UserModel, MessageModel, FuelStatsModel],
                 synchronize: true,
                 autoLoadModels: true, // авто-создание таблиц
             }),
         }),
         UsersModule,
         MessageModule,
+        FuelStatsModule,
     ],
 })
 export class AppModule {}

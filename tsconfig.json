@@ -2,6 +2,9 @@
     "compilerOptions": {
         "module": "commonjs",
         "moduleResolution": "Node",
+        "paths": {
+            "src/*": ["src/*"]
+        },
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "declaration": true,

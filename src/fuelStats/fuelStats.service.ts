@@ -11,6 +11,7 @@ export class FuelStatsService {
     ) {}
 
     async create(fuelStatsDto: FuelStatsDTO) {
+        console.log('CRETE RECORDING YEAH');
         // return await this.fuelStatsModel.create(fuelStatsDto);
     }
 
