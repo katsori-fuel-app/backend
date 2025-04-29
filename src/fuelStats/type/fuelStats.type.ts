@@ -1,4 +1,4 @@
-export type FuelStatsDTO = {
+export type FuelStats = {
     date: Date;
     fuelCount: number;
     fuelType: string;

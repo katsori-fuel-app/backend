@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { FuelStatsModel } from 'src/model';
-import { FuelStatsDTO } from './model';
+import { FuelStatsDto } from './dto';
+import { FuelStats } from './type';
 
 @Injectable()
 export class FuelStatsService {
@@ -10,16 +11,15 @@ export class FuelStatsService {
         private readonly fuelStatsModel: typeof FuelStatsModel,
     ) {}
 
-    async create(fuelStatsDto: FuelStatsDTO) {
-        console.log('CRETE RECORDING YEAH');
-        // return await this.fuelStatsModel.create(fuelStatsDto);
+    async create(fuelStatsDto: FuelStats) {
+        return await this.fuelStatsModel.create(fuelStatsDto);
     }
 
-    async getAll(userId: number): Promise<FuelStatsDTO[]> {
-        // const messages = await this.fuelStatsModel.findAll({
-        //     where: { userId },
-        // });
+    async getAll(userId: number): Promise<FuelStatsDto[]> {
+        const messages = await this.fuelStatsModel.findAll({
+            where: { userId },
+        });
 
-        return [];
+        return messages;
     }
 }

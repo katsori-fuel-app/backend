@@ -1,5 +1,6 @@
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { MessageModel } from './message.model';
+import { FuelStatsModel } from './fuelStats.model';
 
 @Table({ tableName: 'users' })
 export class UserModel extends Model {
@@ -22,4 +23,7 @@ export class UserModel extends Model {
 
     @HasMany(() => MessageModel)
     messageList: MessageModel[];
+
+    @HasMany(() => FuelStatsModel)
+    fuelStat: FuelStatsModel[];
 }

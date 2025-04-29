@@ -1,5 +1,15 @@
-import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import {
+    BelongsTo,
+    Column,
+    DataType,
+    ForeignKey,
+    HasMany,
+    Model,
+    Table,
+} from 'sequelize-typescript';
 import { MessageModel } from './message.model';
+import { User } from 'src/users/type';
+import { UserModel } from './user.model';
 
 @Table({ tableName: 'fuel_stats' })
 export class FuelStatsModel extends Model {
@@ -36,4 +46,11 @@ export class FuelStatsModel extends Model {
 
     @Column(DataType.INTEGER)
     forecastedValue: number; // прогнозируемый пробег после которого нужна заправка.
+
+    @ForeignKey(() => UserModel)
+    @Column
+    userId: number;
+
+    @BelongsTo(() => UserModel)
+    user: User;
 }
