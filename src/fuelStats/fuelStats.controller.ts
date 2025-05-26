@@ -23,6 +23,15 @@ export class FuelStatsController {
             );
         }
 
+        const isCheckNumberValue =
+            typeof fuelCount === 'string' ||
+            typeof refuelCost === 'string' ||
+            typeof totalMileage === 'string';
+        if (isCheckNumberValue) {
+            throw new BadRequestException(
+                'Поля: fuelCount, refuelCost, totalMileage должны быть типом number',
+            );
+        }
         const obj: CalcOnServer = {
             consumedMileage: 50,
             forecastedValue: 50,
