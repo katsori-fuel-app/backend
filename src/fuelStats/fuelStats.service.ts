@@ -22,4 +22,36 @@ export class FuelStatsService {
 
         return messages;
     }
+
+    async getLastTotalMileage(userId: number): Promise<number | null> {
+        const lastRecord = await this.fuelStatsModel.findOne({
+            where: { userId },
+            order: [['date', 'DESC']],
+            attributes: ['totalMileage'],
+        });
+
+        return lastRecord ? lastRecord.totalMileage : null;
+    }
+
+    async getAverageMileage(userId: number): Promise<number> {
+        // Получаем последние 30 записей
+        const lastRecords = await this.fuelStatsModel.findAll({
+            where: { userId },
+            order: [['date', 'DESC']],
+            limit: 5,
+            attributes: ['totalMileage', 'consumedMileage'],
+        });
+
+        console.log('lastRecords: ', lastRecords);
+        if (lastRecords.length < 2) {
+            return 0;
+        }
+
+        // Вычисляем среднее значение consumedMileage
+        const totalConsumedMileage = lastRecords.reduce((acc, record) => {
+            return acc + (record.consumedMileage || 0);
+        }, 0);
+
+        return Math.floor(totalConsumedMileage / lastRecords.length);
+    }
 }
