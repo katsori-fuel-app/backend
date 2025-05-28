@@ -35,10 +35,10 @@ export class FuelStatsModel extends Model {
     @Column
     comment: string; // комментарий к заправке
 
-    @Column(DataType.DECIMAL(8, 2))
+    @Column(DataType.INTEGER)
     consumedMileage: number; // расстояние на 1 баке топлива
 
-    @Column(DataType.DECIMAL(8, 2))
+    @Column(DataType.INTEGER)
     fuelConsumption: number; // расход топлива на 100км
 
     @Column(DataType.INTEGER)
