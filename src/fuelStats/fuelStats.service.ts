@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { FuelStatsModel } from 'src/model';
 import { FuelStatsDto } from './dto';
-import { FuelStats } from './type';
+import { FuelStats, GetAverageMileage } from './type';
 
+const PROTECTED_FIELDS = ['consumedMileage', 'fuelConsumption', 'forecastedValue'];
 @Injectable()
 export class FuelStatsService {
     constructor(
@@ -23,18 +24,56 @@ export class FuelStatsService {
         return messages;
     }
 
-    async getLastTotalMileage(userId: number): Promise<number | null> {
+    async update(
+        id: number,
+        userId: number,
+        updateFields: Partial<FuelStatsDto>,
+    ): Promise<FuelStatsDto> {
+        const record = await this.fuelStatsModel.findOne({ where: { id, userId } });
+
+        if (!record) {
+            throw new Error(`Запись с id=${id} и userId=${userId} не найдена`);
+        }
+
+        const sanitizedFields = Object.fromEntries(
+            Object.entries(updateFields).filter(([key]) => !PROTECTED_FIELDS.includes(key)),
+        );
+
+        await this.fuelStatsModel.update(sanitizedFields, {
+            where: { id, userId },
+        });
+
+        return record;
+    }
+
+    async delete(id: number, userId: number): Promise<string> {
+        const deletedCount = await this.fuelStatsModel.destroy({ where: { id, userId } });
+
+        if (deletedCount === 0) {
+            throw new NotFoundException(
+                `Запись с id=${id} не найдена или не принадлежит userId=${userId}`,
+            );
+        }
+
+        return `Запись с id=${id} успешно удалена.`;
+    }
+
+    /**
+     * Получает пройденное расстояние на 1 баке бенза.
+     */
+    async getConsumedMileage({ userId, totalMileage }: GetAverageMileage): Promise<number> {
         const lastRecord = await this.fuelStatsModel.findOne({
             where: { userId },
             order: [['date', 'DESC']],
             attributes: ['totalMileage'],
         });
 
-        return lastRecord ? lastRecord.totalMileage : null;
+        if (!lastRecord?.totalMileage) return 0;
+
+        return Math.floor(totalMileage - lastRecord.totalMileage);
     }
 
-    async getAverageMileage(userId: number): Promise<number> {
-        // Получаем последние 30 записей
+    async getForecastedValue({ userId, totalMileage }: GetAverageMileage): Promise<number> {
         const lastRecords = await this.fuelStatsModel.findAll({
             where: { userId },
             order: [['date', 'DESC']],
@@ -42,7 +81,6 @@ export class FuelStatsService {
             attributes: ['totalMileage', 'consumedMileage'],
         });
 
-        console.log('lastRecords: ', lastRecords);
         if (lastRecords.length < 2) {
             return 0;
         }
@@ -52,6 +90,11 @@ export class FuelStatsService {
             return acc + (record.consumedMileage || 0);
         }, 0);
 
-        return Math.floor(totalConsumedMileage / lastRecords.length);
+        const averageMileage = Math.floor(totalConsumedMileage / lastRecords.length);
+
+        if (!averageMileage) return 0;
+
+        // Прогноз = текущий пробег + средний пробег
+        return Math.floor(totalMileage + averageMileage);
     }
 }
