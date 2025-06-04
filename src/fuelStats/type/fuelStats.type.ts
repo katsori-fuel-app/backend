@@ -6,3 +6,13 @@ export type FuelStats = {
     comment: string;
     totalMileage: number;
 };
+
+export type GetFuelConsumption = {
+    consumedMileage: number;
+    fuelCount: number;
+};
+
+export type GetAverageMileage = {
+    userId: number;
+    totalMileage: number;
+};

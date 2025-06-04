@@ -1,6 +1,17 @@
-import { BadRequestException, Body, Controller, Get, Global, Post, Query } from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Global,
+    Post,
+    Put,
+    Query,
+} from '@nestjs/common';
 import { FuelStatsService } from './fuelStats.service';
-import { FuelStatsDto } from './dto';
+import { DeleteFuelStat, FuelStatsDto, UpdateFuelStats } from './dto';
+import { getFuelConsumption } from './utils/fuelStatsCalc';
 
 type CalcOnServer = {
     consumedMileage: number; // высчитывается на серваке, убрать из DTO.
@@ -15,8 +26,7 @@ export class FuelStatsController {
 
     @Post()
     async create(@Body() newRecording: FuelStatsDto) {
-        const { comment, date, fuelCount, fuelType, refuelCost, totalMileage, userId } =
-            newRecording;
+        const { date, fuelCount, fuelType, refuelCost, totalMileage, userId } = newRecording;
 
         if (!fuelCount || !fuelType || !refuelCost || !totalMileage || !userId) {
             throw new BadRequestException(
@@ -38,46 +48,25 @@ export class FuelStatsController {
                 'Поля: fuelCount, refuelCost, totalMileage должны быть типом number',
             );
         }
-        /**
-         * Получает пройденное расстояние на 1 баке бенза.
-         */
-        const getConsumedMileage = async (): Promise<number> => {
-            const lastTotalMileage = await this.fuelStatsService.getLastTotalMileage(userId);
-            if (!lastTotalMileage) return 0;
 
-            return Math.floor(totalMileage - lastTotalMileage);
-        };
+        const consumedMileage = await this.fuelStatsService.getConsumedMileage({
+            userId,
+            totalMileage,
+        });
 
-        const consumedMileage = await getConsumedMileage();
-
-        /**
-         * Получает расход топлива 10л/100км.
-         */
-        const getFuelConsumption = (): number => {
-            if (consumedMileage) {
-                return Math.floor((fuelCount / consumedMileage) * 100);
-            } else {
-                return 0;
-            }
-        };
-
-        /**
-         * Получает прогнозируемое значение пробега для следующей заправки
-         */
-        const getForecastedValue = async (): Promise<number> => {
-            const averageMileage = await this.fuelStatsService.getAverageMileage(userId);
-            if (!averageMileage) return 0;
-
-            // Прогноз = текущий пробег + средний пробег
-            return Math.floor(totalMileage + averageMileage);
-        };
+        const forecastedValue = await this.fuelStatsService.getForecastedValue({
+            userId,
+            totalMileage,
+        });
 
         const obj: CalcOnServer = {
             consumedMileage,
-            forecastedValue: await getForecastedValue(),
-            fuelConsumption: getFuelConsumption(),
+            forecastedValue,
+            fuelConsumption: getFuelConsumption({ consumedMileage, fuelCount }),
         };
 
+        // для корректной даты нужно передавать yyyy-mm-dd, т.к. стандарт ISO
+        // можно передать mm.dd.yyyy, но тогда день будет на 1 меньше, нестандарт.
         if (!date) {
             obj.date = new Date();
         }
@@ -98,5 +87,29 @@ export class FuelStatsController {
         }
 
         return this.fuelStatsService.getAll(userId);
+    }
+
+    @Put()
+    async update(@Body() updateData: UpdateFuelStats) {
+        const { userId, id, ...fieldsToUpdate } = updateData;
+
+        if (!Object.keys(fieldsToUpdate).length) {
+            throw new BadRequestException('Укажите хотя бы одно поле для обновления.');
+        }
+
+        try {
+            return await this.fuelStatsService.update(id, userId, fieldsToUpdate);
+        } catch (error) {
+            throw new BadRequestException(`Ошибка при обновлении записи: ${error}`);
+        }
+    }
+
+    @Delete()
+    async delete(@Body() deleteFuelStat: DeleteFuelStat) {
+        if (!deleteFuelStat.id || !deleteFuelStat.userId) {
+            throw new BadRequestException('Укажите id');
+        }
+
+        return await this.fuelStatsService.delete(deleteFuelStat.id, deleteFuelStat.userId);
     }
 }
