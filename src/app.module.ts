@@ -10,6 +10,8 @@ import { MessageModule } from './message/message.module';
 import { FuelStatsModule } from './fuelStats/fuelStats.module';
 import { TestObjModule } from './testObj/testObj.module';
 import { TestObjModel } from './model/testModel';
+import { TestEntityModule } from './testEntity/testEntity.module';
+import { TestEntityModel } from './model/testEntity.model';
 
 @Module({
     providers: [AppService],
@@ -25,7 +27,7 @@ import { TestObjModel } from './model/testModel';
                 username: configService.get('DB_USERNAME'),
                 password: configService.get('DB_PASSWORD'),
                 database: configService.get('DB_NAME'),
-                models: [UserModel, MessageModel, FuelStatsModel, TestObjModel],
+                models: [UserModel, MessageModel, FuelStatsModel, TestObjModel, TestEntityModel],
                 synchronize: true,
                 autoLoadModels: true, // авто-создание таблиц
             }),
@@ -34,6 +36,7 @@ import { TestObjModel } from './model/testModel';
         MessageModule,
         FuelStatsModule,
         TestObjModule,
+        TestEntityModule,
     ],
 })
 export class AppModule {}

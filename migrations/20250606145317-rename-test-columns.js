@@ -3,15 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        // await queryInterface.changeColumn('testObj', 'newField', {
-        //     type: Sequelize.INTEGER,
-        //     allowNull: true,
-        //   });
-
-        await queryInterface.sequelize.query(`
-  ALTER TABLE "testObj"
-  ALTER COLUMN "newField" TYPE INTEGER USING "newField"::integer;
-`);
+        await queryInterface.renameColumn('testEntity', 'fieldTwo', 'joinColumnCustom');
     },
 
     async down(queryInterface) {
