@@ -1,24 +1,24 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
-@Table({ tableName: 'testObj' })
-export class TestObjModel extends Model {
+@Table({ tableName: 'testEntity' })
+export class TestEntityModel extends Model {
     @Column({
         type: DataType.INTEGER,
         unique: true,
         autoIncrement: true,
         primaryKey: true,
     })
-    id: number;
+    keyId: number;
 
     @Column({
         allowNull: true,
         type: DataType.STRING,
     })
-    secondF: string;
+    fieldOne: string;
 
     @Column({
         allowNull: false,
         type: DataType.INTEGER,
     })
-    newField: number;
+    joinColumnCustom: number;
 }

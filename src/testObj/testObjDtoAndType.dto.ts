@@ -1,4 +1,4 @@
 export type TestObjDto = {
-    firstF: string;
-    secondF: number;
+    secondF: string;
+    newField: number;
 };
