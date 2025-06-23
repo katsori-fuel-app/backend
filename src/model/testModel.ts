@@ -1,4 +1,5 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { TestEntityModel } from './testEntity.model';
 
 @Table({ tableName: 'testObj' })
 export class TestObjModel extends Model {
@@ -16,9 +17,13 @@ export class TestObjModel extends Model {
     })
     secondF: string;
 
+    @ForeignKey(() => TestEntityModel)
     @Column({
         allowNull: false,
         type: DataType.INTEGER,
     })
     newField: number;
+
+    @BelongsTo(() => TestEntityModel, 'newField')
+    testEntity: TestEntityModel;
 }
