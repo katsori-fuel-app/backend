@@ -17,6 +17,7 @@ export class TestEntityModel extends Model {
     fieldOne: string;
 
     @Column({
+        unique: true,
         allowNull: false,
         type: DataType.INTEGER,
     })
