@@ -12,6 +12,13 @@ export class UserModel extends Model {
     })
     id: number;
 
+    @Column({
+        type: DataType.UUID,
+        unique: true,
+        primaryKey: true,
+    })
+    uuid: number;
+
     @Column
     login: string;
 

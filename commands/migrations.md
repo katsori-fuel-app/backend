@@ -21,7 +21,18 @@ module.exports = {
         await queryInterface.removeColumn('testObj', 'firstF', 'firstName');
     },
 
+    // для добавление третий параметр - это объект с описание поля
     async down(queryInterface) {
-        await queryInterface.addColumn('testObj', 'firstName', 'firstF');
+        await queryInterface.addColumn('testObj', 'firstName', {...});
     },
 };
+```
+
+# 3. Удаление/добавление полей: queryInterface.removeColumn:
+```ts
+module.exports = {
+    async up(queryInterface, Sequelize) {
+        await queryInterface.renameTable('testObj', 'renamedObj');
+    },
+};
+```
