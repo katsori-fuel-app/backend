@@ -1,5 +1,7 @@
 ### инструкции по миграциям
 
+## Создать миграцию: npx sequelize-cli migration:generate --name имя_миграции
+
 # 1. Ренейм полей: queryInterface.renameColumn:
 
 ```ts
@@ -15,6 +17,7 @@ module.exports = {
 ```
 
 # 2. Удаление/добавление полей: queryInterface.removeColumn:
+
 ```ts
 module.exports = {
     async up(queryInterface: QueryInterface) {
@@ -29,6 +32,7 @@ module.exports = {
 ```
 
 # 3. Удаление/добавление полей: queryInterface.removeColumn:
+
 ```ts
 module.exports = {
     async up(queryInterface, Sequelize) {
