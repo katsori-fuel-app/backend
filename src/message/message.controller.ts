@@ -12,7 +12,7 @@ export class MessageController {
         const { message, userId } = createUserDto;
 
         if (!message || !userId) {
-            throw new BadRequestException('userId и textOfMessage обязательны.');
+            throw new BadRequestException('userId и message обязательны.');
         }
 
         try {

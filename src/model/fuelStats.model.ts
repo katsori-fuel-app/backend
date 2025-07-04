@@ -5,11 +5,12 @@ import { UserModel } from './user.model';
 @Table({ tableName: 'fuel_stats' })
 export class FuelStatsModel extends Model {
     @Column({
-        type: DataType.INTEGER,
-        autoIncrement: true,
+        type: DataType.UUID,
+        unique: true,
         primaryKey: true,
+        defaultValue: DataType.UUIDV4,
     })
-    id: number;
+    uuid: number;
 
     @Column(DataType.DATE)
     date: Date; // дата заправки
