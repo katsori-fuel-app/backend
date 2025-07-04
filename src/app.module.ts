@@ -8,10 +8,6 @@ import { AppConfigModule } from './config.module';
 import { ConfigService } from '@nestjs/config';
 import { MessageModule } from './message/message.module';
 import { FuelStatsModule } from './fuelStats/fuelStats.module';
-import { TestObjModule } from './testObj/testObj.module';
-import { TestObjModel } from './model/testModel';
-import { TestEntityModule } from './testEntity/testEntity.module';
-import { TestEntityModel } from './model/testEntity.model';
 
 @Module({
     providers: [AppService],
@@ -27,7 +23,7 @@ import { TestEntityModel } from './model/testEntity.model';
                 username: configService.get('DB_USERNAME'),
                 password: configService.get('DB_PASSWORD'),
                 database: configService.get('DB_NAME'),
-                models: [UserModel, MessageModel, FuelStatsModel, TestObjModel, TestEntityModel],
+                models: [UserModel, MessageModel, FuelStatsModel],
                 synchronize: true,
                 autoLoadModels: true, // авто-создание таблиц
             }),
@@ -35,8 +31,6 @@ import { TestEntityModel } from './model/testEntity.model';
         UsersModule,
         MessageModule,
         FuelStatsModule,
-        TestObjModule,
-        TestEntityModule,
     ],
 })
 export class AppModule {}

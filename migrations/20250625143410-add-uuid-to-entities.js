@@ -4,16 +4,16 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.sequelize.transaction(async (transaction) => {
-            await queryInterface.addColumn(
-                'users',
-                'uuid',
-                {
-                    type: Sequelize.UUID,
-                    unique: true,
-                    allowNull: true,
-                },
-                { transaction },
-            );
+            // await queryInterface.addColumn(
+            //     'users',
+            //     'uuid',
+            //     {
+            //         type: Sequelize.UUID,
+            //         unique: true,
+            //         allowNull: true,
+            //     },
+            //     { transaction },
+            // );
 
             await queryInterface.addColumn(
                 'message',
