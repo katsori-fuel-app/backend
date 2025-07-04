@@ -5,12 +5,12 @@ import { User } from 'src/users/type';
 @Table({ tableName: 'message' })
 export class MessageModel extends Model {
     @Column({
-        type: DataType.INTEGER,
+        type: DataType.UUID,
         unique: true,
-        autoIncrement: true,
         primaryKey: true,
+        defaultValue: DataType.UUIDV4,
     })
-    id: number;
+    uuid: number;
 
     @ForeignKey(() => UserModel)
     @Column
