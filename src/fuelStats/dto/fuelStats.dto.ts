@@ -2,7 +2,7 @@ import { IsOptional, IsNumber, IsString } from 'class-validator';
 
 export class FuelStatsDto {
     date: Date;
-    userId: number;
+    userId: string;
     fuelCount: number;
     fuelType: string;
     refuelCost: number;
@@ -11,8 +11,8 @@ export class FuelStatsDto {
 }
 
 export class UpdateFuelStats {
-    id: number;
-    userId: number;
+    uuid: string;
+    userId: string;
 
     @IsOptional()
     date: Date;
@@ -39,6 +39,6 @@ export class UpdateFuelStats {
 }
 
 export class DeleteFuelStat {
-    userId: number;
-    id: number;
+    userId: string;
+    uuid: string;
 }

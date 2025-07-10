@@ -81,7 +81,7 @@ export class FuelStatsController {
     }
 
     @Get('/recordings')
-    async getRecordingsByUser(@Query('userId') userId: number) {
+    async getRecordingsByUser(@Query('userId') userId: string) {
         if (!userId) {
             throw new BadRequestException('userId обязателен.');
         }
@@ -91,14 +91,14 @@ export class FuelStatsController {
 
     @Put()
     async update(@Body() updateData: UpdateFuelStats) {
-        const { userId, id, ...fieldsToUpdate } = updateData;
+        const { userId, uuid, ...fieldsToUpdate } = updateData;
 
         if (!Object.keys(fieldsToUpdate).length) {
             throw new BadRequestException('Укажите хотя бы одно поле для обновления.');
         }
 
         try {
-            return await this.fuelStatsService.update(id, userId, fieldsToUpdate);
+            return await this.fuelStatsService.update(uuid, userId, fieldsToUpdate);
         } catch (error) {
             throw new BadRequestException(`Ошибка при обновлении записи: ${error}`);
         }
@@ -106,10 +106,10 @@ export class FuelStatsController {
 
     @Delete()
     async delete(@Body() deleteFuelStat: DeleteFuelStat) {
-        if (!deleteFuelStat.id || !deleteFuelStat.userId) {
+        if (!deleteFuelStat.uuid || !deleteFuelStat.userId) {
             throw new BadRequestException('Укажите id');
         }
 
-        return await this.fuelStatsService.delete(deleteFuelStat.id, deleteFuelStat.userId);
+        return await this.fuelStatsService.delete(deleteFuelStat.uuid, deleteFuelStat.userId);
     }
 }
