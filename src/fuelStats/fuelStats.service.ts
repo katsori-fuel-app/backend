@@ -16,7 +16,7 @@ export class FuelStatsService {
         return await this.fuelStatsModel.create(fuelStatsDto);
     }
 
-    async getAll(userId: number): Promise<FuelStatsDto[]> {
+    async getAll(userId: string): Promise<FuelStatsDto[]> {
         const messages = await this.fuelStatsModel.findAll({
             where: { userId },
         });
@@ -25,14 +25,14 @@ export class FuelStatsService {
     }
 
     async update(
-        id: number,
-        userId: number,
+        uuid: string,
+        userId: string,
         updateFields: Partial<FuelStatsDto>,
     ): Promise<FuelStatsDto> {
-        const record = await this.fuelStatsModel.findOne({ where: { id, userId } });
+        const record = await this.fuelStatsModel.findOne({ where: { uuid, userId } });
 
         if (!record) {
-            throw new Error(`Запись с id=${id} и userId=${userId} не найдена`);
+            throw new Error(`Запись с uuid=${uuid} и userId=${userId} не найдена`);
         }
 
         const sanitizedFields = Object.fromEntries(
@@ -40,22 +40,22 @@ export class FuelStatsService {
         );
 
         await this.fuelStatsModel.update(sanitizedFields, {
-            where: { id, userId },
+            where: { uuid, userId },
         });
 
         return record;
     }
 
-    async delete(id: number, userId: number): Promise<string> {
-        const deletedCount = await this.fuelStatsModel.destroy({ where: { id, userId } });
+    async delete(uuid: string, userId: string): Promise<string> {
+        const deletedCount = await this.fuelStatsModel.destroy({ where: { uuid, userId } });
 
         if (deletedCount === 0) {
             throw new NotFoundException(
-                `Запись с id=${id} не найдена или не принадлежит userId=${userId}`,
+                `Запись с uuid=${uuid} не найдена или не принадлежит userId=${userId}`,
             );
         }
 
-        return `Запись с id=${id} успешно удалена.`;
+        return `Запись с uuid=${uuid} успешно удалена.`;
     }
 
     /**

@@ -13,6 +13,6 @@ export type GetFuelConsumption = {
 };
 
 export type GetAverageMileage = {
-    userId: number;
+    userId: string;
     totalMileage: number;
 };

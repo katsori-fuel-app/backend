@@ -10,11 +10,11 @@ export class MessageModel extends Model {
         primaryKey: true,
         defaultValue: DataType.UUIDV4,
     })
-    uuid: number;
+    uuid: string;
 
     @ForeignKey(() => UserModel)
-    @Column
-    userId: number;
+    @Column(DataType.UUID)
+    userId: string;
 
     @BelongsTo(() => UserModel)
     user: User;

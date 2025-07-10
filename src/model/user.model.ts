@@ -10,7 +10,7 @@ export class UserModel extends Model {
         primaryKey: true,
         defaultValue: DataType.UUIDV4,
     })
-    uuid: number;
+    uuid: string;
 
     @Column
     login: string;

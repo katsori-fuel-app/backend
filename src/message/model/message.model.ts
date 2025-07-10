@@ -1,4 +1,4 @@
 export type MessageDTO = {
-    userId: number;
+    userId: string;
     message: string;
 };

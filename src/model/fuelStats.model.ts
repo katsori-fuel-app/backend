@@ -10,7 +10,7 @@ export class FuelStatsModel extends Model {
         primaryKey: true,
         defaultValue: DataType.UUIDV4,
     })
-    uuid: number;
+    uuid: string;
 
     @Column(DataType.DATE)
     date: Date; // дата заправки
@@ -40,8 +40,8 @@ export class FuelStatsModel extends Model {
     forecastedValue: number; // прогнозируемый пробег после которого нужна заправка.
 
     @ForeignKey(() => UserModel)
-    @Column
-    userId: number;
+    @Column(DataType.UUID)
+    userId: string;
 
     @BelongsTo(() => UserModel)
     user: User;
