@@ -11,8 +11,8 @@ async function bootstrap() {
     dotenv.config();
 
     app.enableCors({
-        // origin: 'http://localhost:3000',
-        origin: 'https://hoppscotch.io',
+        origin: 'http://localhost:3000',
+        // origin: 'https://hoppscotch.io',
     });
 
     const port = configService.get<string | number | undefined>('PORT') ?? 4000;
