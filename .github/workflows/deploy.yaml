@@ -16,6 +16,6 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            whoami
-            hostname
-            docker --version
+            cd ~/touch/backend
+            git pull origin main
+            docker compose up -d --build
