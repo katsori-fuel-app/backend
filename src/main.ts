@@ -15,7 +15,8 @@ async function bootstrap() {
         // origin: 'https://hoppscotch.io',
     });
 
-    const port = configService.get<string | number | undefined>('PORT') ?? 4000;
+    // const port = configService.get<string | number | undefined>('PORT') ?? 4000;
+    const port = 4000;
 
     await app.listen(port);
 
