@@ -7,9 +7,9 @@ services:
     environment:
       DB_HOST: postgres
       DB_PORT: 5432
-      DB_NAME: appdb
-      DB_USER: appuser
+      DB_USERNAME: appuser
       DB_PASSWORD: password
+      DB_NAME: appdb
     depends_on:
       - postgres
 
