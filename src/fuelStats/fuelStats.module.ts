@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { FuelStatsModel } from 'src/model';
+import { FuelStatsModel } from '../model';
 import { FuelStatsController } from './fuelStats.controller';
 import { FuelStatsService } from './fuelStats.service';
 

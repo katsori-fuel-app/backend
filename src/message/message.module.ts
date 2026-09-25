@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { MessageModel } from 'src/model';
+import { MessageModel } from '../model';
 import { MessageController } from './message.controller';
 import { MessageService } from './message.service';
 

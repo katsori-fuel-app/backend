@@ -1,6 +1,6 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { UserModel } from './user.model';
-import { User } from 'src/users/type';
+import { User } from '../users/type';
 
 @Table({ tableName: 'message' })
 export class MessageModel extends Model {

@@ -8,6 +8,7 @@ export class AppService {
     async onModuleInit() {
         try {
             await this.sequelize.authenticate();
+
             console.log('Подключение к БД established successfully.');
         } catch (error) {
             throw new Error('Ошибка: Database connection error');

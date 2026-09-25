@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { FuelStatsModel } from 'src/model';
+import { FuelStatsModel } from '../model';
 import { FuelStatsDto } from './dto';
 import { FuelStats, GetAverageMileage } from './type';
 
 const PROTECTED_FIELDS = ['consumedMileage', 'fuelConsumption', 'forecastedValue'];
+
 @Injectable()
 export class FuelStatsService {
     constructor(

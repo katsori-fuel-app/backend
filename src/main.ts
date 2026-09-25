@@ -15,14 +15,11 @@ async function bootstrap() {
         // origin: 'https://hoppscotch.io',
     });
 
-    // const port = configService.get<string | number | undefined>('PORT') ?? 4000;
-    const port = 3000;
+    const port = configService.get<string | number | undefined>('PORT') ?? 3000;
 
     await app.listen(port);
 
-    if (process?.env?.NODE_ENV) {
-        console.log(`The server is running on port ${process.env['PORT']} with ${port} mode`);
-    }
+    if (process?.env?.NODE_ENV) console.log(`The server is running on port ${port}`);
 }
 
 bootstrap()

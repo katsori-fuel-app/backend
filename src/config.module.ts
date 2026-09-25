@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
-// http://localhost:4000/
+
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -12,4 +12,5 @@ import { AppController } from './app.controller';
     exports: [ConfigModule],
     controllers: [AppController],
 })
+
 export class AppConfigModule {}
