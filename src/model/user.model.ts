@@ -12,13 +12,10 @@ export class UserModel extends Model {
     })
     uuid: string;
 
-    @Column
-    login: string;
+    @Column({ type: DataType.STRING, allowNull: false, field: 'password' })
+    passwordHash: string;
 
-    @Column
-    password: string;
-
-    @Column
+    @Column({ type: DataType.STRING, allowNull: false, unique: true })
     email: string;
 
     @HasMany(() => MessageModel)

@@ -1,5 +1,9 @@
 export type User = {
-    login: string;
-    password: string;
+    passwordHash: string;
+    email: string;
+};
+
+export type UserProfile = {
+    uuid: string;
     email: string;
 };

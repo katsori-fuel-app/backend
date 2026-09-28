@@ -8,6 +8,7 @@ import { AppConfigModule } from './config.module';
 import { ConfigService } from '@nestjs/config';
 import { MessageModule } from './message/message.module';
 import { FuelStatsModule } from './fuelStats/fuelStats.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     providers: [AppService],
@@ -29,6 +30,7 @@ import { FuelStatsModule } from './fuelStats/fuelStats.module';
             }),
         }),
         UsersModule,
+        AuthModule,
         MessageModule,
         FuelStatsModule,
     ],

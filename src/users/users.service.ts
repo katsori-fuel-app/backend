@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './type';
+import { User, UserProfile } from './type';
 import { InjectModel } from '@nestjs/sequelize';
 import { UserModel } from '../model';
 
@@ -14,18 +14,24 @@ export class UsersService {
         return await this.userModel.create(user);
     }
 
-    async findAll(): Promise<UserModel[]> {
-        return await this.userModel.findAll();
+    async findAll(): Promise<UserProfile[]> {
+        const users = await this.userModel.findAll({ attributes: ['uuid', 'email'] });
+        return users.map((user) => ({
+            uuid: user.uuid,
+            email: user.email,
+        }));
     }
 
-    async findOne(login: string): Promise<UserModel | null> {
-        const user = await this.userModel.findOne({ where: { login } });
-        console.log(
-            `
-            
-            info: `,
-            user,
-        );
-        return user;
+    async findByEmail(email: string): Promise<UserModel | null> {
+        return this.userModel.findOne({ where: { email } });
+    }
+
+    async findPublicByEmail(email: string): Promise<UserProfile | null> {
+        const user = await this.userModel.findOne({
+            attributes: ['uuid', 'email'],
+            where: { email },
+        });
+
+        return user ? { uuid: user.uuid, email: user.email } : null;
     }
 }
