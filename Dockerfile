@@ -13,4 +13,4 @@ RUN pnpm build
 
 EXPOSE 3000
 
-CMD ["pnpm", "prod:start"]
+CMD ["sh", "-c", "pnpm migrate:prod && pnpm prod:start"]

@@ -1,37 +1,26 @@
 import {
-    Body,
     Controller,
     Get,
-    Global,
     NotFoundException,
     Param,
-    Post,
-    ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UserDto } from './dto';
 
-@Global()
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
-
-    @Post()
-    create(@Body(new ValidationPipe({ transform: true })) createUserDto: UserDto) {
-        return this.usersService.create(createUserDto);
-    }
 
     @Get()
     getAll() {
         return this.usersService.findAll();
     }
 
-    @Get(':login')
-    async getUser(@Param('login') login: string) {
-        const currentUser = await this.usersService.findOne(login);
+    @Get(':email')
+    async getUser(@Param('email') email: string) {
+        const currentUser = await this.usersService.findPublicByEmail(email);
 
         if (!currentUser) {
-            throw new NotFoundException(`Пользователь '${login}' не найден`);
+            throw new NotFoundException(`Пользователь '${email}' не найден`);
         }
 
         return currentUser;
