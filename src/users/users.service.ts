@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { User, UserProfile } from './type';
+import type { User, UserProfile } from './type';
 import { InjectModel } from '@nestjs/sequelize';
 import { UserModel } from '../model';
+import { UserDto } from './dto';
 
 @Injectable()
 export class UsersService {
@@ -26,12 +27,37 @@ export class UsersService {
         return this.userModel.findOne({ where: { email } });
     }
 
-    async findPublicByEmail(email: string): Promise<UserProfile | null> {
-        const user = await this.userModel.findOne({
-            attributes: ['uuid', 'email'],
-            where: { email },
+    async findById(uuid: string): Promise<UserModel | null> {
+        return this.userModel.findByPk(uuid, { attributes: ['uuid', 'role'] });
+    }
+
+    async findProfileById(uuid: string): Promise<UserDto | null> {
+        const user = await this.userModel.findByPk(uuid, {
+            attributes: [
+                'uuid',
+                'email',
+                'role',
+                'login',
+                'lastName',
+                'firstName',
+                'middleName',
+                'birthDate',
+                'phone',
+            ],
         });
 
-        return user ? { uuid: user.uuid, email: user.email } : null;
+        return user
+            ? {
+                  uuid: user.uuid,
+                  email: user.email,
+                  role: user.role,
+                  login: user.login ?? undefined,
+                  lastName: user.lastName ?? undefined,
+                  firstName: user.firstName ?? undefined,
+                  middleName: user.middleName ?? undefined,
+                  birthDate: user.birthDate ?? undefined,
+                  phone: user.phone ?? undefined,
+              }
+            : null;
     }
 }
